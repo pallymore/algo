@@ -1,3 +1,4 @@
+import test from "ava";
 // given two strings, a & b
 // check if they are only one EDIT away
 // EDIT -> insert a character, remove a character, change a character
@@ -87,14 +88,15 @@ function oneAwayCombined(a, b) {
   return true;
 }
 
-// tests
-console.log(oneAway("pale", "ple") === true);
-console.log(oneAway("pales", "pale") === true);
-console.log(oneAway("pale", "bale") === true);
-console.log(oneAway("pale", "bake") === false);
+test("oneAway", (t) => {
+  t.assert(oneAway("pale", "ple") === true);
+  t.assert(oneAway("pales", "pale") === true);
+  t.assert(oneAway("pale", "bale") === true);
+  t.assert(oneAway("pale", "bake") === false);
 
-// test refactored version
-console.log(oneAwayCombined("pale", "ple") === true);
-console.log(oneAwayCombined("pales", "pale") === true);
-console.log(oneAwayCombined("pale", "bale") === true);
-console.log(oneAwayCombined("pale", "bake") === false);
+  // refactor-ed version
+  t.assert(oneAwayCombined("pale", "ple") === true);
+  t.assert(oneAwayCombined("pales", "pale") === true);
+  t.assert(oneAwayCombined("pale", "bale") === true);
+  t.assert(oneAwayCombined("pale", "bake") === false);
+});

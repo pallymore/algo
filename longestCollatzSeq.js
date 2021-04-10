@@ -1,3 +1,5 @@
+import test from "ava";
+
 let cache = { 1: 1 };
 
 const longest = (n) => {
@@ -25,6 +27,6 @@ const longest = (n) => {
   return longest;
 };
 
-console.time("algoRun");
-console.log(longest(1000000));
-console.timeEnd("algoRun");
+test("longestCollatzSeq", (t) => {
+  t.assert(longest(1000000) === 525);
+});

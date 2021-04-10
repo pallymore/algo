@@ -1,12 +1,14 @@
+import test from "ava";
+
 // s - string - determine if s has unique characters
 function isUnique(s) {
-  const charCount = {};
+  const charMap = {};
   for (let i = 0; i < s.length; i++) {
     const char = s[i];
-    charCount[char] = charCount[char] ?? 0 + 1;
-    if (charCount[char] > 1) {
+    if (charMap[char]) {
       return false;
     }
+    charMap[char] = true;
   }
   return true;
 }
@@ -23,3 +25,11 @@ function isUniqueNoHash(s) {
   }
   return true;
 }
+
+test("isUnique", (t) => {
+  t.assert(isUnique("of bar"));
+  t.assert(isUniqueNoHash("of bar"));
+
+  t.assert(!isUniqueNoHash("babara"));
+  t.assert(!isUnique("babara"));
+});

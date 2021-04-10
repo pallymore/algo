@@ -5,11 +5,12 @@
   Each operation should run in O(1) time.
 */
 
+import test from "ava";
 // LRU = hash + double linked List -> head = most used, tail = least used.
 import {
   Node,
   DoubleLinkedList,
-} from "./data-structures/double-linked-list/DoubleLinkedList";
+} from "./data-structures/double-linked-list/DoubleLinkedList.js";
 
 export class LRU {
   constructor(n) {
@@ -51,3 +52,16 @@ export class LRU {
     return node.value;
   }
 }
+
+test("LRU", (t) => {
+  const lru = new LRU(2);
+  lru.set("foo", 1);
+  t.assert(lru.get("foo") === 1);
+  lru.set("bar", 2);
+  t.assert(lru.get("bar") === 2);
+  lru.set("bar", 3);
+  t.assert(lru.get("bar") === 3);
+  lru.set("baz", 4);
+  t.assert(lru.get("baz") === 4);
+  t.assert(lru.get("foo") == null);
+});

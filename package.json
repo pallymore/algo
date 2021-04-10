@@ -2,13 +2,17 @@
   "name": "algo",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "LRU.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "author": "Yurui Zhang",
   "license": "ISC",
   "devDependencies": {
     "ava": "^3.15.0"
+  },
+  "ava": {
+    "files": ["**/*.js", "!data-structures/**/*.*"]
   }
 }

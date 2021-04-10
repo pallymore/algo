@@ -25,6 +25,8 @@ The first line contains two integers,  and , the number of priced toys and the a
 The next line contains  space-separated integers 
 */
 
+import test from "ava";
+
 function markAndToys(prices, k) {
   const sortedPrices = prices.sort((a, b) => (a > b ? 1 : -1));
 
@@ -38,3 +40,25 @@ function markAndToys(prices, k) {
 
   return total;
 }
+
+const testCases = [
+  {
+    input: [[1, 2, 3, 4], 7],
+    expected: 3,
+  },
+  {
+    input: [[3, 7, 2, 9, 4], 15],
+    expected: 3,
+  },
+  {
+    input: [[1, 12, 5, 111, 200, 1000, 10], 50],
+    expected: 4,
+  },
+];
+
+test("markAndToys", (t) => {
+  testCases.forEach(({ input, expected }) => {
+    const result = markAndToys(...input);
+    t.assert(result === expected);
+  });
+});
