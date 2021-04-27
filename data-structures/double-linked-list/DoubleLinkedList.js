@@ -12,6 +12,18 @@ export class DoubleLinkedList {
     this.tail = head;
   }
 
+  appendNode(value) {
+    const node = new Node(value);
+    if (!this.head || !this.tail) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.previous = this.tail;
+      this.tail.next = node;
+      this.tail = node;
+    }
+  }
+
   removeNode(node) {
     if (this.head === node) this.head = node.next;
     if (this.tail === node) this.tail = node.previous;
@@ -38,13 +50,23 @@ export class DoubleLinkedList {
     this.head = newHead;
   }
 
-  print() {
+  toString() {
     let currentNode = this.head;
     let values = [];
     while (currentNode) {
       values.push(currentNode.value);
       currentNode = currentNode.next;
     }
-    console.log(values.join(" <-> "));
+    return values.join(" <-> ");
+  }
+
+  print() {
+    console.log(this.toString());
   }
 }
+
+export const arrayToDoubleLinkedList = (arr) => {
+  const list = new DoubleLinkedList();
+  arr.forEach((v) => list.appendNode(v));
+  return list;
+};
