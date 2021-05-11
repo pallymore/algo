@@ -16,8 +16,22 @@ const reachNumber = function (x) {
   }
 };
 
+const reachNumberFaster = function (x) {
+  x = Math.abs(x);
+  let n = Math.ceil(Math.sqrt(1 + 8 * x) / 2 - 0.5);
+  while (x % 2 !== ((n * (n + 1)) / 2) % 2) {
+    n += 1;
+  }
+
+  return n;
+};
+
 test("reachNumber", (t) => {
   t.assert(reachNumber(3) === 2);
   t.assert(reachNumber(2) === 3);
   t.assert(reachNumber(-2) === 3);
+
+  t.assert(reachNumberFaster(3) === 2);
+  t.assert(reachNumberFaster(2) === 3);
+  t.assert(reachNumberFaster(-2) === 3);
 });
