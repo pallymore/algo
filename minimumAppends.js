@@ -48,7 +48,6 @@ function minAppends(str) {
 }
 
 test("min appends", (t) => {
-  t.assert(minAppends("mbadm") === 2);
-  // t.assert(minAppends("abede") === 2);
-  // t.assert(minAppends("aabb") === 2);
+  t.assert(minAppends("abede") === 2);
+  t.assert(minAppends("aabb") === 2);
 });
