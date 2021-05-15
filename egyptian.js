@@ -4,7 +4,7 @@ const egyptian = ([a, b]) => {
   if (b % a === 0) return [[1, b / a]];
 
   const results = [];
-t  const newBase = (b + a - ((b + a) % a)) / a;
+  const newBase = (b + a - ((b + a) % a)) / a;
   const egyptianRepresentation = [1, newBase];
 
   results.push(egyptianRepresentation);
