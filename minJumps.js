@@ -29,14 +29,36 @@ function minJumps(nums, start = 0, memo = {}) {
   return memo[start];
 }
 
+function minJumpsDP(nums) {
+  if (nums.length === 0) return 0;
+  if (nums[0] === 0) return -1;
+
+  const minJumps = new Array(nums.length).fill(Infinity);
+  minJumps[0] = 0; // no jumps needed to reach the first number
+
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = 0; j < i; j++) {
+      const jumps = nums[j];
+      const canReachI = jumps + j >= i;
+      if (canReachI) {
+        minJumps[i] = Math.min(1 + minJumps[j], minJumps[i]);
+        break;
+      }
+    }
+  }
+
+  return minJumps[nums.length - 1];
+}
+
 test("min jumps", (t) => {
   t.assert(minJumps([]) === 0);
   t.assert(minJumps([1]) === 0);
   t.assert(minJumps([1, 2]) === 1);
   t.assert(minJumps([2, 1, 1]) === 1);
   t.assert(minJumps([2, 3, 1, 1, 4]) === 2);
+  t.assert(minJumpsDP([2, 3, 1, 1, 4]) === 2);
   t.assert(
-    minJumps([
+    minJumpsDP([
       33,
       21,
       50,
