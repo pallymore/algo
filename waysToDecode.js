@@ -1,16 +1,5 @@
 import test from "ava";
 
-// const getMapping = () => {
-//   let mapping = {};
-//   for (let i = 1; i <= 26; i++) {
-//     const char = String.fromCharCode(64 + i);
-//     mapping[char] = `${i}`;
-//   }
-//   return mapping;
-// };
-
-// const MAPPING = getMapping();
-
 function ways(A, i = 0, memo = {}) {
   if (i === A.length) return 1;
   if (A.charAt(i) === "0") return 0;
@@ -27,14 +16,36 @@ function ways(A, i = 0, memo = {}) {
   return total;
 }
 
+function waysDP(A) {
+  if (A.charAt(0) === "0") return 0;
+  if (A.length === 1) return 1;
+
+  const ways = new Array(A.length + 1).fill(0);
+  ways[0] = 1;
+  ways[1] = 1; // at least one way
+
+  for (let i = 2; i <= A.length; i++) {
+    const char = A.charAt(i - 1);
+    if (Number(char) >= 1) {
+      ways[i] = ways[i - 1];
+    }
+    const prevChar = A.charAt(i - 2);
+    if (prevChar === "1" || (prevChar === "2" && Number(char) < 7)) {
+      // prev char is also valid
+      ways[i] += ways[i - 2];
+    }
+  }
+
+  return ways[A.length];
+}
+
 test("ways to decode", (t) => {
   t.is(ways("8"), 1);
   t.is(ways("12"), 2);
   t.is(ways("226"), 3);
+
+  t.is(waysDP("8"), 1);
+  t.is(waysDP("12"), 2);
+  t.is(waysDP("226"), 3);
+  t.is(waysDP("875361268549483279131"), 6);
 });
-
-// Given encoded message "8", it could be decoded as only "H" (8).
-// The number of ways decoding "8" is 1.
-
-// Given encoded message "12", it could be decoded as "AB" (1, 2) or "L" (12).
-// The number of ways decoding "12" is 2.
