@@ -1,0 +1,152 @@
+ <html>
+  <style>
+    .shipping-addresses-blocks-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      padding: 12px 6px;
+      border: 1px solid;
+    }
+    
+    .shipping-addresses-blocks-container > button {
+      flex-grow: 0;
+      background-color: green;
+    }
+    
+    .shipping-addresses-blocks-container > button:disabled {
+      background-color: grey;
+    }
+    
+    ul.shipping-blocks {
+        flex-grow: 1;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: nowrap;
+        margin: 0 6px;
+    }
+    
+    ul.shipping-blocks > li {
+        display: inline-block;
+        padding: 12px;
+        margin-right: 15px;
+    }
+    
+    ul.shipping-blocks > li:last-of-type {
+        margin-right: 0;
+    }
+    
+    ul.shipping-blocks > li > button {
+      margin-top: 16px;
+    }
+  </style>
+
+  <body>
+    <div class="shipping-addresses">
+      <h3>Shipping Address:</h3>
+      <div class="shipping-addresses-blocks-container">
+        <button id="prevButton" disabled>&lt;&lt;</button>
+        <ul id="shpping-blocks" class="shipping-blocks"></ul>
+        <button id="nextButton" disabled>&gt;&gt;</button>
+      </div>
+    </div>
+  </body> 
+  
+  <script>    
+    /** test data */
+    const alphabet = 'PQRSTUVWXYZABCDEFGHIJKLMNO'.split('');
+
+    const getAddressData = (page) => {
+      if (page > 6) {
+        throw Error(`Unexpected page: ${page}`);
+      }
+
+      const startIndex = (page - 1) * 5;
+
+      const addresses = [];
+
+      for (let i = 0; i < Math.min(26 - startIndex, 5); i++) {
+        addresses.push({
+          id: startIndex + i,
+          name: `${alphabet[i + startIndex]}. Sherman`,
+          addressLine1: `${startIndex + i + 42} Wallaby Way`,
+          addressLine2: 'Sydney, NSW'
+        });
+      }
+
+      return {
+        addresses: addresses,
+        hasNextPage: page !== 6
+      };
+    };
+    /** end test data */
+  
+  
+  
+    window.addEventListener('load', function() { 
+      let currentPage = 1;
+
+      const createButton = (address) => {
+        const button = document.createElement('button');
+        button.textContent = 'Ship to address';
+        button.value = address.id;
+        button.addEventListener(
+          'click',
+          (event) => alert(`shipping to ${event.target.value}`)
+        );
+        return button;
+      };
+      
+      const prevButton = document.querySelector('#prevButton');
+      const nextButton = document.querySelector('#nextButton');
+      const shippingBlocksContainer = document.querySelector('#shpping-blocks');
+
+      const renderAddressBook = (page) => {
+        const { addresses, hasNextPage} = getAddressData(page);
+        shippingBlocksContainer.innerHTML = "";
+        addresses.forEach(address => {
+            shippingBlocksContainer.appendChild(renderAddressBlock(address));
+        });
+        
+        if (currentPage <= 1) {
+            prevButton.setAttribute('disabled', 'true');
+        } else {
+            prevButton.removeAttribute('disabled');
+        }
+        
+        if (hasNextPage) {
+            nextButton.removeAttribute('disabled');
+        } else {
+            nextButton.setAttribute('disabled', 'true');
+        }
+        
+      }
+      
+      const renderAddressBlock = (address) => {
+        const item = document.createElement('li');
+        ['name', 'addressLine1', 'addressLine2'].forEach(key => {
+            const value = address[key];
+            const container = document.createElement('p');
+            container.innerText = value;
+            item.appendChild(container);
+        });
+        const shipToAddressBtn = createButton(address);
+        item.appendChild(shipToAddressBtn);
+        return item;
+      }
+      
+      prevButton.addEventListener('click', () => {
+         if (currentPage <= 1) return;
+         currentPage--;
+         renderAddressBook(currentPage);
+      });
+      
+      nextButton.addEventListener('click', () => {
+         currentPage++;
+         renderAddressBook(currentPage);
+      });
+
+      renderAddressBook(currentPage);
+    }, false);
+  </script> 
+</html>
