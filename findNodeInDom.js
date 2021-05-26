@@ -23,10 +23,6 @@ import test from "ava";
     </div>
   * */
 
-const root1 = document.querySelector("#root1");
-const root2 = document.querySelector("#root2");
-const node1 = document.querySelector("#node1");
-
 function findNode(rootA, rootB, nodeA) {
   if (rootA === nodeA) return rootB;
 
@@ -39,7 +35,6 @@ function findNode(rootA, rootB, nodeA) {
     node = parentElement;
   }
 
-  console.log(pathToNode);
   let resultNode = rootB.children[pathToNode.shift()];
   while (pathToNode.length !== 0) {
     resultNode = resultNode.children[pathToNode.shift()];
@@ -48,7 +43,13 @@ function findNode(rootA, rootB, nodeA) {
   return resultNode;
 }
 
-console.log(findNode(root1, root2, node1)); // this would be #node2
+function testFindNode() {
+  const root1 = document.querySelector("#root1");
+  const root2 = document.querySelector("#root2");
+  const node1 = document.querySelector("#node1");
+
+  console.log(findNode(root1, root2, node1)); // this would be #node2
+}
 
 test("find node in dom", (t) => {
   t.is(true, true, `This is not unit testable here (yet)`);
