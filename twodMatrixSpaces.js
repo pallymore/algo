@@ -29,7 +29,6 @@ function twoDArrSSpaces(matrix) {
       }
 
       // is space!
-      console.log(rowIndex, colIndex);
       total++;
 
       // greedly visit all surrounding spaces.

@@ -50,7 +50,5 @@ test("smaller than each i", (t) => {
 });
 
 test("smaller than each i with hash", (t) => {
-  const actual = smallerWithHash([8, 1, 2, 2, 3]);
-  console.log(actual);
   t.deepEqual(smallerWithHash([8, 1, 2, 2, 3]), [4, 0, 1, 1, 3]);
 });
