@@ -10,9 +10,13 @@
   "author": "Yurui Zhang",
   "license": "ISC",
   "devDependencies": {
-    "ava": "^3.15.0"
+    "ava": "^3.15.0",
+    "sinon": "^11.1.0"
   },
   "ava": {
-    "files": ["**/*.js", "!data-structures/**/*.*"]
+    "files": [
+      "**/*.js",
+      "!data-structures/**/*.*"
+    ]
   }
 }
