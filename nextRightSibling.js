@@ -3,16 +3,17 @@ import test from "ava";
 // https://bigfrontend.dev/problem/previous-left-sibling
 // Given a DOM tree and a target element, please return the previous left sibling.
 
-export function prevLeftSibling(root, target) {
-  if (target.previousElementSibling) return target.previousElementSibling;
+export function nextRightSibling(root, target) {
+  if (target === root) return null;
+  if (target.nextElementSibling) return target.nextElementSibling;
 
   let parentElement = target.parentElement;
 
   while (parentElement) {
-    parentElement = previousLeftSibling(root, parentElement);
+    parentElement = nextRightSibling(root, parentElement);
 
-    if (parentElement && parentElement.lastElementChild) {
-      return parentElement.lastElementChild;
+    if (parentElement && parentElement.firstElementChild) {
+      return parentElement.firstElementChild;
     }
   }
 
