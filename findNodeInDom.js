@@ -28,7 +28,7 @@ function findNode(rootA, rootB, nodeA) {
 
   const pathToNode = [];
   let node = nodeA;
-  while (node !== root1) {
+  while (node !== rootA) {
     const parentElement = node.parentElement;
     const index = Array.from(parentElement.children).indexOf(node);
     pathToNode.unshift(index);
