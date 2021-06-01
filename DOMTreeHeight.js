@@ -28,3 +28,21 @@ function getHeight(root) {
   if (root.children.length === 0) return 1;
   return 1 + Math.max(...Array.prototype.map.call(root.children, getHeight));
 }
+
+function getHeightRecursive(root) {
+  if (!root) return 0;
+  const queue = [root];
+  let depth = 0;
+
+  while (queue.length > 0) {
+    const queueSize = queue.length;
+    for (let i = 0; i < queueSize; i++) {
+      const node = queue.shift();
+      queue.push(...node.children);
+    }
+
+    depth++;
+  }
+
+  return depth;
+}
